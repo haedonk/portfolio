@@ -10,6 +10,7 @@
     "full": "npm run build && npm run start"
   },
   "dependencies": {
+    "framer-motion": "^10.18.0",
     "next": "14.0.3",
     "react": "^18",
     "react-dom": "^18"
