@@ -3,25 +3,50 @@
 @tailwind utilities;
 
 @layer base {
+  /* --- THEME TOKENS (dark) --- */
   :root {
-    --bg: #0B0F14;
-    --surface: rgba(255, 255, 255, 0.06);
-    --border: rgba(255, 255, 255, 0.18);
-    --text: #E6EDF3;
-    --muted: #A0AEC0;
-    --accent: #7CC4FF;
+    /* Core colors tuned to showcase glass */
+    --bg: #0b1017;               /* deeper blue-black */
+    --bg-2: #0f1725;             /* secondary bg for gradient blend */
+    --surface: rgba(255, 255, 255, 0.06); /* brighter glass base */
+    --surface-solid: #141b2a;    /* fallback when transparency reduced */
+    --border: rgba(255, 255, 255, 0.14);
+    --text: #e8eef9;
+    --muted: #98a6c3;
+    --accent: #72d0ff;           /* soft cyan accent */
   }
 
   html {
     font-family: theme('fontFamily.sans');
-    background-color: var(--bg);
-    color: var(--text);
     scroll-behavior: smooth;
+  }
+
+  html,
+  body {
+    background:
+      radial-gradient(1200px 600px at 20% 0%, rgba(114, 208, 255, 0.1), transparent 60%),
+      radial-gradient(1000px 500px at 85% 15%, rgba(114, 208, 255, 0.06), transparent 60%),
+      linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+    color: var(--text);
   }
 
   body {
     min-height: 100vh;
-    background-color: transparent;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.06;
+    mix-blend-mode: soft-light;
+    background-image: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'>\
+<filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/></filter>\
+<rect width='120' height='120' filter='url(#n)' opacity='0.6'/>\
+</svg>");
+    z-index: 0;
   }
 
   a {
@@ -45,8 +70,38 @@
 }
 
 @layer components {
+  /* --- GLASS CARD --- */
   .glass-card {
-    @apply bg-[var(--surface)] backdrop-blur-md border border-[var(--border)] rounded-2xl shadow-glass;
+    position: relative;
+    border-radius: 1rem; /* matches Tailwind rounded-2xl in JSX */
+    background: var(--surface);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(14px) saturate(120%);
+    -webkit-backdrop-filter: blur(14px) saturate(120%);
+    box-shadow:
+      0 10px 30px rgba(0, 0, 0, 0.45),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    outline: 1px solid rgba(255, 255, 255, 0.04);
+    outline-offset: -1px;
+  }
+
+  .glass-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: radial-gradient(120% 80% at 10% 0%,
+        rgba(255, 255, 255, 0.18),
+        rgba(255, 255, 255, 0.05) 35%,
+        transparent 55%);
+    opacity: 0.35;
+  }
+
+  .badge-glass {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    backdrop-filter: blur(8px) saturate(120%);
   }
 
   .section-heading {
@@ -62,8 +117,23 @@
   }
 }
 
+@media (prefers-reduced-transparency: reduce) {
+  :root {
+    --surface: rgba(255, 255, 255, 0.04);
+  }
+
+  .glass-card {
+    background: var(--surface-solid) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: none !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
