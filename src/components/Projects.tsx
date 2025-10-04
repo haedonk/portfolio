@@ -12,12 +12,12 @@ const projects: Project[] = [
   {
     title: 'Recipe AI Platform',
     summary:
-      'Semantic recipe discovery engine with ingestion pipeline for 100k+ records and personalized search results.',
-    stack: ['Angular', 'Spring Boot', 'PostgreSQL', 'OpenAI Embeddings'],
+      'Semantic recipe discovery engine with ingestion pipeline for 200k+ records and personalized search results.',
+    stack: ['Angular', 'Spring Boot', 'PostgreSQL', 'Vector Embeddings'],
     achievements: [
-      'Processed 100k+ recipes via Spring Batch with automated data quality checks.',
+      'Processed 200k+ recipes via Spring Batch with automated data quality checks.',
       'Reduced search latency by 45% using vector indexes and query caching.',
-      'Shipped analytics dashboard surfacing conversion metrics for marketing teams.',
+      'Optimized AI costs by 30% through prompt engineering and response filtering.',
     ],
     links: [
       { label: 'Live', href: 'https://recipes.haedonkaufman.com' },
@@ -29,40 +29,13 @@ const projects: Project[] = [
     summary: 'Modernized messaging services powering multi-channel customer notifications at PNC Bank.',
     stack: ['Java 17', 'Spring Boot', 'Kafka', 'OpenShift'],
     achievements: [
-      'Handled 5k+ transactions per second with resilient consumer groups and dead-letter processing.',
-      'Implemented OAuth2 security and observability patterns adopted by 12+ teams.',
+      'Handled 5k+ transactions per second with resilient consumer groups and short circuiting.',
+      'Implemented OAuth2 security and observability patterns across 50+ microservices.',
       'Cut incident response time by 30% through Dynatrace dashboards and runbooks.',
     ],
     links: [
-      { label: 'Case Study', href: 'https://www.pnc.com/' },
     ],
-  },
-  {
-    title: 'Platform CI/CD Automation',
-    summary: 'Unified Jenkins pipelines delivering automated quality gates and environment promotion.',
-    stack: ['Jenkins', 'Groovy', 'Docker', 'SonarQube'],
-    achievements: [
-      'Accelerated deploy cycles by 20% through reusable pipeline templates.',
-      'Integrated security scanning and contract tests with automated Slack notifications.',
-      'Enabled one-click rollbacks with artifact versioning and change logs.',
-    ],
-    links: [
-      { label: 'GitHub', href: 'https://github.com/haedonk/pipeline-templates' },
-    ],
-  },
-  {
-    title: 'Developer Success Portal',
-    summary: 'Internal portal aggregating service health, API documentation, and onboarding resources.',
-    stack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Elastic Stack'],
-    achievements: [
-      'Consolidated 15+ legacy Confluence pages into a single searchable experience.',
-      'Achieved accessibility score of 98 with extensive keyboard and screen reader testing.',
-      'Embedded live uptime metrics through authenticated dashboards.',
-    ],
-    links: [
-      { label: 'GitHub', href: 'https://github.com/haedonk/dev-success-portal' },
-    ],
-  },
+  }
 ]
 
 export function Projects() {

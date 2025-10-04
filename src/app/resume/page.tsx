@@ -23,6 +23,7 @@ const sections: Section[] = [
           'Deliver and maintain 50+ Java microservices handling 5k+ TPS for SMS banking experiences.',
           'Lead cloud migration of 15 legacy services onto OpenShift with automated resilience testing.',
           'Improve customer onboarding by 25% by launching auto-enrollment messaging flows.',
+          'Developed automated integration and contract tests using Groovy/Spock and integrated SonarQube to enforce code quality and surface coverage metrics.',
         ],
       },
       {
@@ -63,7 +64,7 @@ const sections: Section[] = [
     items: [
       {
         heading: 'Languages & Frameworks',
-        bullets: ['Java', 'Spring Boot', 'Node.js', 'TypeScript', 'SQL', 'Python'],
+            bullets: ['Java', 'Groovy', 'Spring Boot', 'Node.js', 'TypeScript', 'SQL', 'Python'],
       },
       {
         heading: 'Platform & Tooling',
@@ -80,7 +81,7 @@ export default function ResumePage() {
         <div>
           <p className="text-sm uppercase tracking-[0.3em] text-[var(--muted)]">Resume</p>
           <h1 className="mt-2 text-3xl font-semibold text-[var(--text)] md:text-4xl">Haedon Kaufman</h1>
-          <p className="mt-1 text-sm text-[var(--muted)]">haedonkaufman@gmail.com · Portland, OR · linkedin.com/in/haedonkaufman</p>
+          <p className="mt-1 text-sm text-[var(--muted)]">haka9670@gmail.com · Pittsburgh, PA · linkedin.com/in/haedonkaufman</p>
         </div>
         <Link
           href="/"

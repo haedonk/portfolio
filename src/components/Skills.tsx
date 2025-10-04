@@ -3,19 +3,19 @@ import { GlassCard } from './GlassCard'
 const skills = [
   {
     title: 'Backend',
-    items: ['Java', 'Spring Boot', 'Node.js', 'REST APIs', 'GraphQL'],
+    items: ['Java', 'Spring Boot', 'Python', 'Node.js', 'REST APIs', 'Microservices', 'Pytorch'],
   },
   {
     title: 'DevOps',
-    items: ['Kubernetes', 'OpenShift', 'Docker', 'Jenkins', 'CI/CD Automation'],
+    items: ['Kubernetes', 'OpenShift', 'Helm', 'Docker', 'Jenkins', 'CI/CD Automation', 'Google Cloud Platform'],
   },
   {
     title: 'Data',
-    items: ['PostgreSQL', 'Oracle', 'Kafka', 'Redis', 'Elasticsearch'],
+    items: ['PostgreSQL', 'Oracle', 'Kafka', 'Power BI', 'Elasticsearch', 'Logscale', 'Dynatrace'],
   },
   {
     title: 'Frontend',
-    items: ['TypeScript', 'React', 'Next.js', 'Tailwind CSS', 'Design Systems'],
+    items: ['TypeScript', 'React', 'Next.js', 'Design Systems', 'JavaScript'],
   },
 ]
 
@@ -46,6 +46,22 @@ export function Skills() {
             </GlassCard>
           ))}
         </div>
+        <GlassCard className="p-6">
+          <h3 className="text-lg font-semibold text-[var(--text)]">Kubernetes — Scaling & Optimization</h3>
+          <p className="mt-2 text-sm text-[var(--muted)]">
+            Practical experience designing autoscaling and resource strategies to improve reliability and reduce cost.
+            Focus areas include Horizontal Pod Autoscaler (HPA) for scaling pods by CPU/memory or custom metrics, Vertical
+            Pod Autoscaler (VPA) for right-sizing pod resource requests, and using the Cluster Autoscaler for node-level
+            scaling.
+          </p>
+          <ul className="mt-3 list-disc pl-5 text-sm text-[var(--muted)] space-y-1">
+            <li>Horizontal vs. Vertical scaling: HPA (scale replicas) and VPA (adjust resource requests/limits).</li>
+            <li>Autoscaling pods on CPU/memory and custom metrics (Prometheus adapter / external metrics).</li>
+            <li>Resource requests & limits tuning to reduce throttling and optimize cluster utilization.</li>
+            <li>Cluster Autoscaler and node sizing to balance cost and performance.</li>
+            <li>Observability + readiness/liveness probes to ensure safe scaling and rollout behavior.</li>
+          </ul>
+        </GlassCard>
       </div>
     </section>
   )
