@@ -1,15 +1,20 @@
 import Link from 'next/link'
+import Image from 'next/image'
+import FilterBar from './FilterBar'
 import { GlassCard } from './GlassCard'
 
 export function Hero() {
   return (
     <section id="top" className="section-wrapper pt-24 pb-20">
+      <FilterBar />
       <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr),minmax(0,1.1fr)] lg:items-center">
         <div className="flex min-h-full items-center justify-center lg:items-center">
           <GlassCard className="flex h-56 w-56 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface)] text-3xl font-semibold text-[var(--text)] shadow-glass overflow-hidden">
-            <img
+            <Image
               src="/images/projects/IMG_4601.jpg"
               alt="Haedon Kaufman"
+              width={224}
+              height={224}
               className="h-full w-full object-cover object-center"
             />
           </GlassCard>
