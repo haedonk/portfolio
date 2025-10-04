@@ -17,6 +17,10 @@ const skills = [
     title: 'Frontend',
     items: ['TypeScript', 'React', 'Next.js', 'Design Systems', 'JavaScript'],
   },
+  {
+    title: 'AI-Enhanced Development',
+    items: ['GitHub Copilot', 'OpenAI Codex', 'IntelliJ IDEA', 'PyCharm', 'VS Code'],
+  },
 ]
 
 export const highlights = [

@@ -22,6 +22,7 @@ const roles: Role[] = [
     'Led the cloud migration of 15 legacy services to OpenShift with automated resilience and load testing pipelines.',
     'Improved customer onboarding by 25% by launching auto-enrollment and proactive messaging flows.',
     'Enhanced observability and incident response through Dynatrace dashboards, distributed tracing, and runbook automation.',
+    'Adopted AI-assisted tools (Copilot, Codex) to streamline development, improve test coverage generation, and maintain consistent code documentation across Java and Python services.',
     ],
   },
   {

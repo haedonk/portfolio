@@ -13,6 +13,9 @@ export function About() {
         My approach combines <strong>disciplined engineering</strong>, deep system observability, and cross-team collaboration 
         to ship software that scales confidently and runs efficiently.
       </p>
+      <p className="mt-4 leading-relaxed text-[var(--muted)]">
+        I actively integrate <strong>AI-assisted development tools</strong> into my workflow, including GitHub Copilot in IntelliJ, PyCharm, and VS Code, as well as OpenAI Codex for rapid prototyping and documentation. This enables me to accelerate boilerplate creation, maintain focus on architecture and logic, and deliver production-quality solutions faster.
+      </p>
     </GlassCard>
 
     <GlassCard className="p-6 md:p-8">
@@ -21,6 +24,7 @@ export function About() {
         <li><strong>Scaling</strong> Spring Boot and Kafka-based systems with intelligent autoscaling and lag-aware rebalancing.</li>
         <li><strong>Automating</strong> CI/CD pipelines and resilience testing to streamline deployments across OpenShift environments.</li>
         <li><strong>Optimizing</strong> data workflows and observability pipelines to improve insights and reduce operational overhead.</li>
+        <li><strong>Leveraging</strong> AI-assisted tools like GitHub Copilot and Codex to accelerate development and maintain code quality.</li>
       </ul>
     </GlassCard>
   </div>
