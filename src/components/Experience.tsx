@@ -1,0 +1,75 @@
+import { GlassCard } from './GlassCard'
+
+type Role = {
+  company: string
+  title: string
+  period: string
+  location: string
+  achievements: string[]
+}
+
+const roles: Role[] = [
+  {
+    company: 'PNC Bank',
+    title: 'Software Engineer',
+    period: '2022 — Present',
+    location: 'Remote',
+    achievements: [
+      'Delivered and maintained 50+ Java microservices handling 5k+ TPS for SMS banking.',
+      'Led cloud migration of 15 legacy services onto OpenShift with automated resilience testing.',
+      'Improved customer onboarding by 25% by launching auto-enrollment messaging flows.',
+      'Reduced JVM resource usage by 30% through profiling, caching, and observability upgrades.',
+    ],
+  },
+  {
+    company: 'The Libertine Pub',
+    title: 'Assistant Manager',
+    period: '2021 — 2022',
+    location: 'San Luis Obispo, CA',
+    achievements: [
+      'Trained 90% of new staff on high-volume operations and guest experience standards.',
+      'Cut waste by 10% through measurement systems and supplier process updates.',
+    ],
+  },
+  {
+    company: 'The Litigation Practice Group',
+    title: 'Operations Coordinator',
+    period: '2020 — 2021',
+    location: 'San Clemente, CA',
+    achievements: [
+      'Boosted productivity by 30% via scheduling policies and daily standups.',
+      'Improved customer outcomes by 15% through trend analysis and reporting.',
+    ],
+  },
+]
+
+export function Experience() {
+  return (
+    <section id="experience" className="section-wrapper py-16 lg:py-20">
+      <div className="max-w-3xl">
+        <h2 className="section-heading">Experience</h2>
+        <p className="mt-3 leading-7 text-[var(--muted)]">
+          A track record of owning outcomes, mentoring teams, and elevating operations.
+        </p>
+      </div>
+      <div className="mt-8 space-y-6">
+        {roles.map((role) => (
+          <GlassCard key={role.company} className="p-6 md:p-8">
+            <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+              <div>
+                <h3 className="text-xl font-semibold text-[var(--text)]">{role.title}</h3>
+                <p className="text-sm text-[var(--muted)]">{role.company} · {role.location}</p>
+              </div>
+              <p className="text-sm font-medium text-[var(--muted)]">{role.period}</p>
+            </div>
+            <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-6 text-[var(--muted)]">
+              {role.achievements.map((achievement) => (
+                <li key={achievement}>{achievement}</li>
+              ))}
+            </ul>
+          </GlassCard>
+        ))}
+      </div>
+    </section>
+  )
+}
