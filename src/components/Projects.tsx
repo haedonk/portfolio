@@ -1,4 +1,9 @@
+'use client'
+
+import { useEffect, useMemo, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 import { GlassCard } from './GlassCard'
+import { FilterKey, itemMatches, parseFiltersFromURL } from './filter-utils'
 
 interface Project {
   title: string
@@ -61,9 +66,39 @@ const projects = [
     ],
   },
 ]
-
-
 export function Projects() {
+  const [filters, setFilters] = useState<Set<FilterKey>>(new Set())
+
+  useEffect(() => {
+    const applyFromUrl = () => setFilters(parseFiltersFromURL())
+    const onChange = (event: Event) => {
+      const detail = (event as CustomEvent<{ filters: FilterKey[] }>).detail
+      if (detail?.filters) {
+        setFilters(new Set(detail.filters))
+      }
+    }
+
+    applyFromUrl()
+    window.addEventListener('popstate', applyFromUrl)
+    window.addEventListener('filterchange', onChange as EventListener)
+    return () => {
+      window.removeEventListener('popstate', applyFromUrl)
+      window.removeEventListener('filterchange', onChange as EventListener)
+    }
+  }, [])
+
+  const enhanced = useMemo(() => {
+    return projects
+      .map((project) => {
+        const match = itemMatches(
+          [project.title, project.summary, project.stack, project.achievements],
+          filters
+        )
+        return { project, match }
+      })
+      .sort((a, b) => Number(b.match) - Number(a.match))
+  }, [filters])
+
   return (
     <section id="projects" className="section-wrapper py-16 lg:py-20">
       <div className="flex flex-col gap-6">
@@ -74,41 +109,53 @@ export function Projects() {
           </p>
         </div>
         <div className="grid gap-6 lg:grid-cols-2">
-          {projects.map((project) => (
-            <GlassCard key={project.title} className="flex h-full flex-col justify-between p-6">
-              <div className="space-y-4">
-                <div>
-                  <h3 className="text-xl font-semibold text-[var(--text)]">{project.title}</h3>
-                  <p className="mt-2 text-sm leading-6 text-[var(--muted)]">{project.summary}</p>
-                </div>
-                <div className="flex flex-wrap gap-2 text-xs font-medium uppercase tracking-wide text-[var(--muted)]">
-                  {project.stack.map((item) => (
-                    <span key={item} className="rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-1">
-                      {item}
-                    </span>
-                  ))}
-                </div>
-                <ul className="list-disc space-y-2 pl-5 text-sm leading-6 text-[var(--muted)]">
-                  {project.achievements.map((achievement) => (
-                    <li key={achievement}>{achievement}</li>
-                  ))}
-                </ul>
-              </div>
-              <div className="mt-6 flex flex-wrap gap-3">
-                {project.links.map((link) => (
-                  <a
-                    key={link.href}
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center rounded-2xl border border-[var(--border)] px-3 py-2 text-xs font-semibold uppercase tracking-wide text-[var(--text)] transition duration-200 ease-out hover:-translate-y-0.5 hover:bg-[var(--surface)] hover:shadow-lg hover:shadow-black/40 focus-visible:-translate-y-0.5"
-                  >
-                    {link.label}
-                  </a>
-                ))}
-              </div>
-            </GlassCard>
-          ))}
+          <AnimatePresence initial={false}>
+            {enhanced.map(({ project, match }) => (
+              <motion.div
+                key={project.title}
+                layout
+                initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                animate={{ opacity: match ? 1 : 0.55, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 8 }}
+                transition={{ type: 'spring', stiffness: 420, damping: 36, mass: 0.8 }}
+                className="contents"
+              >
+                <GlassCard className="flex h-full flex-col justify-between p-6">
+                  <div className="space-y-4">
+                    <div>
+                      <h3 className="text-xl font-semibold text-[var(--text)]">{project.title}</h3>
+                      <p className="mt-2 text-sm leading-6 text-[var(--muted)]">{project.summary}</p>
+                    </div>
+                    <div className="flex flex-wrap gap-2 text-xs font-medium uppercase tracking-wide text-[var(--muted)]">
+                      {project.stack.map((item) => (
+                        <span key={item} className="rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-1">
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+                    <ul className="list-disc space-y-2 pl-5 text-sm leading-6 text-[var(--muted)]">
+                      {project.achievements.map((achievement) => (
+                        <li key={achievement}>{achievement}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="mt-6 flex flex-wrap gap-3">
+                    {project.links.map((link) => (
+                      <a
+                        key={link.href}
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-center rounded-2xl border border-[var(--border)] px-3 py-2 text-xs font-semibold uppercase tracking-wide text-[var(--text)] transition duration-200 ease-out hover:-translate-y-0.5 hover:bg-[var(--surface)] hover:shadow-lg hover:shadow-black/40 focus-visible:-translate-y-0.5"
+                      >
+                        {link.label}
+                      </a>
+                    ))}
+                  </div>
+                </GlassCard>
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </div>
       </div>
     </section>

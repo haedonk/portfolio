@@ -1,4 +1,9 @@
+'use client'
+
+import { useEffect, useMemo, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 import { GlassCard } from './GlassCard'
+import { FilterKey, itemMatches, parseFiltersFromURL } from './filter-utils'
 
 const skills = [
   {
@@ -60,9 +65,36 @@ export const highlights = [
   },
 ];
 
-
-
 export function Skills() {
+  const [filters, setFilters] = useState<Set<FilterKey>>(new Set())
+
+  useEffect(() => {
+    const applyFromUrl = () => setFilters(parseFiltersFromURL())
+    const onChange = (event: Event) => {
+      const detail = (event as CustomEvent<{ filters: FilterKey[] }>).detail
+      if (detail?.filters) {
+        setFilters(new Set(detail.filters))
+      }
+    }
+
+    applyFromUrl()
+    window.addEventListener('popstate', applyFromUrl)
+    window.addEventListener('filterchange', onChange as EventListener)
+    return () => {
+      window.removeEventListener('popstate', applyFromUrl)
+      window.removeEventListener('filterchange', onChange as EventListener)
+    }
+  }, [])
+
+  const highlightsSorted = useMemo(() => {
+    return highlights
+      .map((item) => {
+        const match = itemMatches([item.title, item.description, item.bullets], filters)
+        return { item, match }
+      })
+      .sort((a, b) => Number(b.match) - Number(a.match))
+  }, [filters])
+
   return (
     <section id="skills" className="section-wrapper py-16 lg:py-20">
       <div className="flex flex-col gap-6">
@@ -89,19 +121,30 @@ export function Skills() {
             </GlassCard>
           ))}
         </div>
-      <div className="mt-10 space-y-6">
-        {highlights.map((item, index) => (
-          <GlassCard key={index} className="p-6">
-            <h3 className="text-lg font-semibold text-[var(--text)]">{item.title}</h3>
-            <p className="mt-2 text-sm text-[var(--muted)]">{item.description}</p>
-            <ul className="mt-3 list-disc pl-5 text-sm text-[var(--muted)] space-y-1">
-              {item.bullets.map((point, i) => (
-                <li key={i}>{point}</li>
-              ))}
-            </ul>
-          </GlassCard>
-        ))}
-      </div>
+        <div className="mt-10 space-y-6">
+          <AnimatePresence initial={false}>
+            {highlightsSorted.map(({ item, match }) => (
+              <motion.div
+                key={item.title}
+                layout
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: match ? 1 : 0.6, y: 0 }}
+                exit={{ opacity: 0, y: 8 }}
+                transition={{ type: 'spring', stiffness: 420, damping: 36 }}
+              >
+                <GlassCard className="p-6">
+                  <h3 className="text-lg font-semibold text-[var(--text)]">{item.title}</h3>
+                  <p className="mt-2 text-sm text-[var(--muted)]">{item.description}</p>
+                  <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-[var(--muted)]">
+                    {item.bullets.map((point, index) => (
+                      <li key={index}>{point}</li>
+                    ))}
+                  </ul>
+                </GlassCard>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
       </div>
     </section>
   )
