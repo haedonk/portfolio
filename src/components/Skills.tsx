@@ -19,6 +19,49 @@ const skills = [
   },
 ]
 
+export const highlights = [
+  {
+    title: 'Kubernetes — Scaling & Optimization',
+    description:
+      'Practical experience designing autoscaling and resource strategies to improve reliability and reduce cost. Focus areas include Horizontal Pod Autoscaler (HPA) for scaling pods by CPU/memory or custom metrics, Vertical Pod Autoscaler (VPA) for right-sizing pod resource requests, and using the Cluster Autoscaler for node-level scaling.',
+    bullets: [
+      'Horizontal vs. Vertical scaling: HPA (scale replicas) and VPA (adjust resource requests/limits).',
+      'Autoscaling pods on CPU/memory and custom metrics (Prometheus adapter / external metrics).',
+      'Resource requests & limits tuning to reduce throttling and optimize cluster utilization.',
+      'Cluster Autoscaler and node sizing to balance cost and performance.',
+      'Observability + readiness/liveness probes to ensure safe scaling and rollout behavior.',
+    ],
+  },
+  {
+    title: 'Kafka — High-Throughput Messaging & Reliability',
+    description:
+      'Extensive experience architecting and tuning Apache Kafka for mission-critical systems requiring high throughput, message durability, and real-time processing. Skilled in optimizing producer–consumer performance, managing backpressure, and ensuring data integrity across distributed clusters.',
+    bullets: [
+      'Designed and optimized Kafka topologies supporting 5k+ TPS across multi-microservice environments.',
+      'Implemented partitioning strategies, consumer group balancing, and concurrency controls to maximize parallelism and minimize lag.',
+      'Enabled dynamic scaling of Kafka consumer applications based on consumer lag and CPU utilization, using sticky assignors to prevent stop-the-world rebalances.',
+      'Developed Kafka Connect integrations for ETL ingestion and data synchronization between databases and external APIs.',
+      'Created retry, backoff, and dead-letter workflows ensuring guaranteed delivery and fault isolation.',
+      'Applied fine-grained producer and consumer tuning (batch.size, linger.ms, fetch.min.bytes) to improve throughput and latency.',
+      'Instrumented topic health monitoring and lag tracking with Dynatrace and custom metrics dashboards.',
+    ],
+  },
+  {
+    title: 'Spring Batch — Large-Scale Data Processing',
+    description:
+      'Proficient in designing scalable Spring Batch jobs for high-volume ETL and enrichment pipelines, enabling efficient, fault-tolerant data ingestion at enterprise scale.',
+    bullets: [
+      'Built parallelized file ingestion and transformation pipelines handling 4M+ records per run with chunk-oriented processing.',
+      'Implemented partitioned step execution and asynchronous task scheduling for optimal performance.',
+      'Integrated Spring Batch with Kafka Connectors for streaming and downstream data propagation.',
+      'Created custom retry, skip, and checkpoint logic to ensure transactional consistency and graceful recovery.',
+      'Optimized memory and commit intervals to balance throughput and stability during large-scale batch runs.',
+    ],
+  },
+];
+
+
+
 export function Skills() {
   return (
     <section id="skills" className="section-wrapper py-16 lg:py-20">
@@ -46,22 +89,19 @@ export function Skills() {
             </GlassCard>
           ))}
         </div>
-        <GlassCard className="p-6">
-          <h3 className="text-lg font-semibold text-[var(--text)]">Kubernetes — Scaling & Optimization</h3>
-          <p className="mt-2 text-sm text-[var(--muted)]">
-            Practical experience designing autoscaling and resource strategies to improve reliability and reduce cost.
-            Focus areas include Horizontal Pod Autoscaler (HPA) for scaling pods by CPU/memory or custom metrics, Vertical
-            Pod Autoscaler (VPA) for right-sizing pod resource requests, and using the Cluster Autoscaler for node-level
-            scaling.
-          </p>
-          <ul className="mt-3 list-disc pl-5 text-sm text-[var(--muted)] space-y-1">
-            <li>Horizontal vs. Vertical scaling: HPA (scale replicas) and VPA (adjust resource requests/limits).</li>
-            <li>Autoscaling pods on CPU/memory and custom metrics (Prometheus adapter / external metrics).</li>
-            <li>Resource requests & limits tuning to reduce throttling and optimize cluster utilization.</li>
-            <li>Cluster Autoscaler and node sizing to balance cost and performance.</li>
-            <li>Observability + readiness/liveness probes to ensure safe scaling and rollout behavior.</li>
-          </ul>
-        </GlassCard>
+      <div className="mt-10 space-y-6">
+        {highlights.map((item, index) => (
+          <GlassCard key={index} className="p-6">
+            <h3 className="text-lg font-semibold text-[var(--text)]">{item.title}</h3>
+            <p className="mt-2 text-sm text-[var(--muted)]">{item.description}</p>
+            <ul className="mt-3 list-disc pl-5 text-sm text-[var(--muted)] space-y-1">
+              {item.bullets.map((point, i) => (
+                <li key={i}>{point}</li>
+              ))}
+            </ul>
+          </GlassCard>
+        ))}
+      </div>
       </div>
     </section>
   )

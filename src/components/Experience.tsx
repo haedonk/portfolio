@@ -15,10 +15,13 @@ const roles: Role[] = [
     period: '2022 — Present',
     location: 'Remote',
     achievements: [
-      'Delivered and maintained 50+ Java microservices handling 5k+ TPS for SMS banking.',
-      'Led cloud migration of 15 legacy services onto OpenShift with automated resilience testing.',
-      'Improved customer onboarding by 25% by launching auto-enrollment messaging flows.',
-      'Reduced JVM resource usage by 30% through profiling, caching, and observability upgrades.',
+    'Delivered and maintained 50+ Java microservices handling 5k+ TPS for enterprise SMS banking.',
+    'Solely designed and implemented a new bulk messaging platform using Spring Batch and Kafka, reducing end-to-end processing time from 7 hours to 1.5 hours while scaling to 4M+ records.',
+    'Integrated Resilience4j circuit breakers to enhance fault tolerance and failover handling for high-throughput messaging pipelines.',
+    'Analyzed cluster-wide resource usage and reduced total JVM and memory consumption by 200GB through autoscaling optimization, profiling, and performance analytics.',
+    'Led the cloud migration of 15 legacy services to OpenShift with automated resilience and load testing pipelines.',
+    'Improved customer onboarding by 25% by launching auto-enrollment and proactive messaging flows.',
+    'Enhanced observability and incident response through Dynatrace dashboards, distributed tracing, and runbook automation.',
     ],
   },
   {

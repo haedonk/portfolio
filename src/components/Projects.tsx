@@ -8,35 +8,60 @@ interface Project {
   links: { label: string; href: string }[]
 }
 
-const projects: Project[] = [
+const projects = [
+  {
+    title: 'Bulk Messaging System',
+    summary:
+      'High-throughput batch and Kafka-based messaging system replacing legacy ETL workflows for large-scale customer notifications at PNC Bank.',
+    stack: ['Java 17', 'Spring Batch', 'Kafka', 'OpenShift', 'Microsoft Graph'],
+    achievements: [
+      'Solely designed and implemented the entire system end-to-end, from ingestion to delivery.',
+      'Built a Spring Batch pipeline to read and process 4M+ records from SharePoint via Microsoft Graph API in parallel.',
+      'Engineered concurrent API calls for customer phone retrieval and database inserts, optimizing I/O throughput.',
+      'Integrated Kafka connectors to stream records directly from the database into topics for real-time processing.',
+      'Developed a bulk messaging Kafka consumer capable of processing 4M+ records in 1.5 hours (legacy ETL: 100K in 2 hours; ~53× faster).',
+      'Architected fault-tolerant job recovery and retry mechanisms ensuring data consistency across parallel tasks.',
+      'Deployed and monitored the system on OpenShift, achieving a 7× performance improvement and sustained operational reliability.',
+    ],
+    links: [],
+  },
+  {
+    title: 'SMS Banking Integrations',
+    summary:
+      'Modernized messaging services powering multi-channel customer notifications at PNC Bank.',
+    stack: ['Java 21', 'Spring Boot', 'Kafka', 'OpenShift'],
+    achievements: [
+      'Handled 5k+ transactions per second with resilient Kafka consumer groups and short-circuiting patterns.',
+      'Implemented OAuth2 security and observability standards across 50+ microservices.',
+      'Reduced incident response time by 30% via Dynatrace dashboards and automated runbooks.',
+      'Upgraded legacy applications from Java 8 → 17 → 21, leveraging language-level optimizations and improved GC tuning.',
+      'Integrated Resilience4j circuit breakers and backoff policies to harden high-throughput pipelines and eliminate stop-the-world rebalances.',
+      'Reduced cluster memory footprint by 200GB through autoscaling strategy design, resource tuning, and performance profiling.',
+    ],
+    links: [],
+  },
   {
     title: 'Recipe AI Platform',
     summary:
       'Semantic recipe discovery engine with ingestion pipeline for 200k+ records and personalized search results.',
-    stack: ['Angular', 'Spring Boot', 'PostgreSQL', 'Vector Embeddings'],
+    stack: ['Angular', 'Spring Boot', 'PostgreSQL', 'pgvector / Embeddings'],
     achievements: [
-      'Processed 200k+ recipes via Spring Batch with automated data quality checks.',
-      'Reduced search latency by 45% using vector indexes and query caching.',
-      'Optimized AI costs by 30% through prompt engineering and response filtering.',
+      'Processed 200k+ recipes via Spring Batch with automated data quality checks and validation rules.',
+      'Developed scalable ingestion and enrichment pipelines using Spring Boot and PostgreSQL with pgvector for semantic search.',
+      'Implemented embedding generation workflows using OpenAI and local models (BGE-base, Llama 3) for vector similarity ranking.',
+      'Reduced search latency by 45% through vector indexing, caching, and optimized query strategies.',
+      'Optimized AI cost by 30% via prompt tuning, token aggregation, and request batching.',
+      'Designed RESTful APIs for semantic search, filtering, and recipe recommendations.',
+      'Integrated Angular frontend for interactive, low-latency semantic exploration of recipes.',
+      'Implemented batch failure logging and retry workflows for resilient large-scale data processing.',
     ],
     links: [
       { label: 'Live', href: 'https://recipes.haedonkaufman.com' },
       { label: 'GitHub', href: 'https://github.com/haedonk/recipe-ai' },
     ],
   },
-  {
-    title: 'SMS Banking Integrations',
-    summary: 'Modernized messaging services powering multi-channel customer notifications at PNC Bank.',
-    stack: ['Java 17', 'Spring Boot', 'Kafka', 'OpenShift'],
-    achievements: [
-      'Handled 5k+ transactions per second with resilient consumer groups and short circuiting.',
-      'Implemented OAuth2 security and observability patterns across 50+ microservices.',
-      'Cut incident response time by 30% through Dynatrace dashboards and runbooks.',
-    ],
-    links: [
-    ],
-  }
 ]
+
 
 export function Projects() {
   return (

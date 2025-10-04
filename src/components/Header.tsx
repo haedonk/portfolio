@@ -29,12 +29,6 @@ export function Header() {
             </a>
           ))}
         </nav>
-        <Link
-          href="/resume"
-          className="glass-card inline-flex min-w-[96px] flex-shrink-0 items-center justify-center rounded-2xl px-4 py-2 text-sm font-medium text-[var(--text)] transition duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/40 focus-visible:-translate-y-0.5"
-        >
-          Resume
-        </Link>
       </div>
     </header>
   )

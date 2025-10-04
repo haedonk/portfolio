@@ -5,9 +5,13 @@ export function Hero() {
   return (
     <section id="top" className="section-wrapper pt-24 pb-20">
       <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr),minmax(0,1.1fr)] lg:items-center">
-        <div className="flex justify-center lg:justify-start">
-          <GlassCard className="flex h-32 w-32 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface)] text-3xl font-semibold text-[var(--text)] shadow-glass">
-            HK
+        <div className="flex min-h-full items-center justify-center lg:items-center">
+          <GlassCard className="flex h-56 w-56 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface)] text-3xl font-semibold text-[var(--text)] shadow-glass overflow-hidden">
+            <img
+              src="/images/projects/IMG_4601.jpg"
+              alt="Haedon Kaufman"
+              className="h-full w-full object-cover object-center"
+            />
           </GlassCard>
         </div>
         <div className="space-y-6 text-center lg:text-left">
