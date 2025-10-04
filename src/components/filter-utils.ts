@@ -55,7 +55,7 @@ export function itemMatches(
     Scaling: ['scaling', 'autoscaling', 'hpa', 'vpa', 'cluster autoscaler', 'concurrency', 'rebalance'],
   }
 
-  for (const k of active) {
+  for (const k of Array.from(active)) {
     const needles = map[k]
     if (needles.some((n) => hay.includes(n))) return true
   }
