@@ -1,3 +1,5 @@
+'use client'
+
 export function Footer() {
   return (
     <footer className="section-wrapper py-10 text-sm text-[var(--muted)]">
