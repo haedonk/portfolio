@@ -8,32 +8,19 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'orbitron': ['Orbitron', 'monospace'],
+        sans: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-ibm-plex-mono)', 'IBM Plex Mono', 'SFMono-Regular', 'ui-monospace', 'monospace'],
       },
-      animation: {
-        'fade-in-up': 'fadeInUp 0.8s ease-out',
-        'fade-in': 'fadeIn 1s ease-out',
+      colors: {
+        accent: 'var(--accent)',
       },
-      keyframes: {
-        fadeInUp: {
-          '0%': {
-            opacity: '0',
-            transform: 'translateY(30px)'
-          },
-          '100%': {
-            opacity: '1',
-            transform: 'translateY(0)'
-          }
-        },
-        fadeIn: {
-          '0%': {
-            opacity: '0'
-          },
-          '100%': {
-            opacity: '1'
-          }
-        }
-      }
+      boxShadow: {
+        'glass': '0 24px 48px -24px rgba(0, 0, 0, 0.45)',
+      },
+      transitionDuration: {
+        150: '150ms',
+        200: '200ms',
+      },
     },
   },
   plugins: [],

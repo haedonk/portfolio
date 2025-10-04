@@ -1,75 +1,45 @@
 # Portfolio
 
-A modern, dark-themed portfolio built with Next.js 13+ App Router, featuring animated particles and smooth transitions.
+A glass-inspired, recruiter-friendly portfolio built with Next.js, React, and Tailwind CSS. The layout keeps content clear and accessible without flashy animations.
 
 ## Features
 
-- ✨ Dark theme with starry particle background
-- 🎬 Smooth animations using Framer Motion
-- 🎨 Styled with Tailwind CSS
-- ⚡ Built with Next.js 13+ App Router
-- 🎯 TypeScript support
-- 📱 Fully responsive design
-
-## Technologies Used
-
-- **Next.js 13+** - React framework with App Router
-- **TypeScript** - Type safety
-- **Tailwind CSS** - Utility-first CSS framework
-- **Framer Motion** - Animation library
-- **@tsparticles/react** - Particle background effects
-- **Orbitron Font** - Google Fonts
+- 🧊 Glassmorphism surfaces with soft shadows and strong typography
+- 🧭 Clear information hierarchy across hero, skills, projects, experience, and contact
+- ♿ Accessible color palette and focus states with reduced-motion safeguards
+- ⚡ Optimized for performance with lightweight dependencies and Next.js App Router
 
 ## Getting Started
 
-1. **Install dependencies:**
+1. **Install dependencies**
    ```bash
    npm install
    ```
-
-2. **Run the development server:**
+2. **Run the development server**
    ```bash
    npm run dev
    ```
-
-3. **Open your browser:**
-   Navigate to [http://localhost:3000](http://localhost:3000)
-
-## Project Structure
-
-```
-src/
-├── app/
-│   ├── layout.tsx      # Global layout with font loading
-│   └── page.tsx        # Main homepage
-├── components/
-│   ├── ParticleBackground.tsx  # Animated particle background
-│   └── Hero.tsx               # Hero section with animations
-└── styles/
-    └── globals.css     # Global styles and Tailwind imports
-```
+3. **Open your browser**
+   Visit [http://localhost:3000](http://localhost:3000) to view the site.
 
 ## Customization
 
-### Update Personal Information
-- Edit `src/components/Hero.tsx` to change your name and title
-- Modify `src/app/layout.tsx` to update the page metadata
+### Update Personal Details
+- Edit copy inside the section components located in `src/components/` (e.g., `Hero.tsx`, `About.tsx`, `Experience.tsx`).
+- Adjust global design tokens in `src/styles/globals.css`.
 
-### Styling
-- Customize colors and animations in `tailwind.config.js`
-- Modify particle settings in `src/components/ParticleBackground.tsx`
-- Adjust animations in `src/components/Hero.tsx`
+### Manage Projects
+- Update the `projects` array in `src/components/Projects.tsx` to add, remove, or edit showcased work.
+- Each project supports a short summary, tech stack list, measurable highlights, and optional live/source links.
+
+### Provide Your Resume
+- Replace `public/resume.pdf` with your own PDF to power the “Resume” button in the navigation.
 
 ## Build and Deploy
 
 ```bash
-# Build for production
 npm run build
-
-# Start production server
 npm start
 ```
 
-## License
-
-This project is open source and available under the [MIT License](LICENSE).
+The project is MIT licensed. Feel free to adapt it for your own portfolio.

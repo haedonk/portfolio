@@ -1,9 +1,39 @@
 import type { Metadata } from 'next'
+import { Inter, IBM_Plex_Mono } from 'next/font/google'
 import '../styles/globals.css'
 
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-inter',
+  display: 'swap',
+})
+
+const plexMono = IBM_Plex_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-ibm-plex-mono',
+  display: 'swap',
+})
+
 export const metadata: Metadata = {
-  title: 'Portfolio - Your Name',
-  description: 'A modern portfolio built with Next.js 13+ and React',
+  title: 'Haedon Kaufman | Software Engineer',
+  description: 'Software engineer specializing in dependable backend services, integrations, and cloud automation.',
+  openGraph: {
+    title: 'Haedon Kaufman | Software Engineer',
+    description:
+      'Software engineer specializing in dependable backend services, integrations, and cloud automation.',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Haedon Kaufman | Software Engineer',
+    description:
+      'Software engineer specializing in dependable backend services, integrations, and cloud automation.',
+  },
+  alternates: {
+    canonical: '/',
+  },
 }
 
 export default function RootLayout({
@@ -12,14 +42,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body className="font-orbitron bg-black text-white min-h-screen">
+    <html lang="en" className="bg-[var(--bg)]">
+      <body className={`${inter.variable} ${plexMono.variable} font-sans bg-[var(--bg)] text-[var(--text)]`}>
         {children}
       </body>
     </html>
