@@ -118,6 +118,8 @@ export function Projects({ items = projectCardItems }: { items?: CardItem[] }) {
   const filters = useActiveFilters()
   const active = filters.size > 0
 
+  if (active) return null
+
   return (
     <section id="projects" className="section-wrapper py-16 lg:py-20">
       <div className="flex flex-col gap-6">

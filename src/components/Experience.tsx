@@ -83,6 +83,8 @@ export function Experience({ items = experienceCardItems }: { items?: CardItem[]
   const filters = useActiveFilters()
   const active = filters.size > 0
 
+  if (active) return null
+
   return (
     <section id="experience" className="section-wrapper py-16 lg:py-20">
       <div className="max-w-3xl">

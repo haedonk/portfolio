@@ -3,6 +3,7 @@ import { useMemo } from 'react'
 import { About } from '../components/About'
 import { Contact } from '../components/Contact'
 import { Experience, experienceCardItems } from '../components/Experience'
+import FilterBar from '../components/FilterBar'
 import { Footer } from '../components/Footer'
 import { Header } from '../components/Header'
 import { Hero } from '../components/Hero'
@@ -20,6 +21,7 @@ export default function Home() {
     <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
       <Header />
       <main>
+        <FilterBar />
         <ResultsShelf items={items} />
         <Hero />
         <About />

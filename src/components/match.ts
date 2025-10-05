@@ -7,6 +7,6 @@ export function matches(texts: (string | string[] | undefined)[], filters: Set<s
   )
     .join(' | ')
     .toLowerCase()
-  for (const f of filters) if (hay.includes(f.toLowerCase())) return true
+  for (const f of Array.from(filters)) if (hay.includes(f.toLowerCase())) return true
   return false
 }

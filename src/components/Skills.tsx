@@ -94,6 +94,8 @@ export function Skills({ items = highlightCardItems }: { items?: CardItem[] }) {
   const filters = useActiveFilters()
   const active = filters.size > 0
 
+  if (active) return null
+
   return (
     <section id="skills" className="section-wrapper py-16 lg:py-20">
       <div className="flex flex-col gap-6">

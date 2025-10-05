@@ -1,5 +1,5 @@
 'use client'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { GlassCard } from './GlassCard'
 import useActiveFilters from './useActiveFilters'
 
@@ -8,21 +8,17 @@ export function About() {
   const active = filters.size > 0
 
   return (
-    <motion.section
-      id="about"
-      layout
-      animate={{
-        height: active ? 0 : 'auto',
-        opacity: active ? 0 : 1,
-        marginTop: active ? 0 : undefined,
-        marginBottom: active ? 0 : undefined,
-      }}
-      style={{
-        overflow: active ? 'hidden' : undefined,
-        pointerEvents: active ? 'none' : 'auto',
-      }}
-      className="section-wrapper py-16 lg:py-20"
-    >
+    <AnimatePresence initial={false}>
+      {!active && (
+        <motion.section
+          key="about"
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: 'auto' }}
+          exit={{ opacity: 0, height: 0 }}
+          transition={{ duration: 0.3, ease: 'easeInOut' }}
+          className="section-wrapper py-16 lg:py-20"
+          style={{ overflow: 'hidden' }}
+        >
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr),minmax(0,1fr)]">
         <GlassCard className="p-6 md:p-8">
           <h2 className="section-heading">About</h2>
@@ -56,6 +52,8 @@ export function About() {
           </ul>
         </GlassCard>
       </div>
-    </motion.section>
+        </motion.section>
+      )}
+    </AnimatePresence>
   )
 }
