@@ -1,4 +1,10 @@
+'use client'
+import { LayoutGroup } from 'framer-motion'
+import MotionCard from './MotionCard'
+import useActiveFilters from './useActiveFilters'
+import { matches } from './match'
 import { GlassCard } from './GlassCard'
+import type { CardItem } from './ResultsShelf'
 
 const skills = [
   {
@@ -25,6 +31,7 @@ const skills = [
 
 export const highlights = [
   {
+    id: 'highlight-kubernetes',
     title: 'Kubernetes — Scaling & Optimization',
     description:
       'Practical experience designing autoscaling and resource strategies to improve reliability and reduce cost. Focus areas include Horizontal Pod Autoscaler (HPA) for scaling pods by CPU/memory or custom metrics, Vertical Pod Autoscaler (VPA) for right-sizing pod resource requests, and using the Cluster Autoscaler for node-level scaling.',
@@ -37,6 +44,7 @@ export const highlights = [
     ],
   },
   {
+    id: 'highlight-kafka',
     title: 'Kafka — High-Throughput Messaging & Reliability',
     description:
       'Extensive experience architecting and tuning Apache Kafka for mission-critical systems requiring high throughput, message durability, and real-time processing. Skilled in optimizing producer–consumer performance, managing backpressure, and ensuring data integrity across distributed clusters.',
@@ -51,6 +59,7 @@ export const highlights = [
     ],
   },
   {
+    id: 'highlight-spring-batch',
     title: 'Spring Batch — Large-Scale Data Processing',
     description:
       'Proficient in designing scalable Spring Batch jobs for high-volume ETL and enrichment pipelines, enabling efficient, fault-tolerant data ingestion at enterprise scale.',
@@ -62,11 +71,31 @@ export const highlights = [
       'Optimized memory and commit intervals to balance throughput and stability during large-scale batch runs.',
     ],
   },
-];
+]
 
+export const highlightCardItems: CardItem[] = highlights.map((item) => ({
+  id: item.id,
+  title: item.title,
+  texts: [item.title, item.description, item.bullets],
+  render: () => (
+    <GlassCard className="p-6">
+      <h3 className="text-lg font-semibold text-[var(--text)]">{item.title}</h3>
+      <p className="mt-2 text-sm text-[var(--muted)]">{item.description}</p>
+      <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-[var(--muted)]">
+        {item.bullets.map((point) => (
+          <li key={point}>{point}</li>
+        ))}
+      </ul>
+    </GlassCard>
+  ),
+}))
 
+export function Skills({ items = highlightCardItems }: { items?: CardItem[] }) {
+  const filters = useActiveFilters()
+  const active = filters.size > 0
 
-export function Skills() {
+  if (active) return null
+
   return (
     <section id="skills" className="section-wrapper py-16 lg:py-20">
       <div className="flex flex-col gap-6">
@@ -93,19 +122,23 @@ export function Skills() {
             </GlassCard>
           ))}
         </div>
-      <div className="mt-10 space-y-6">
-        {highlights.map((item, index) => (
-          <GlassCard key={index} className="p-6">
-            <h3 className="text-lg font-semibold text-[var(--text)]">{item.title}</h3>
-            <p className="mt-2 text-sm text-[var(--muted)]">{item.description}</p>
-            <ul className="mt-3 list-disc pl-5 text-sm text-[var(--muted)] space-y-1">
-              {item.bullets.map((point, i) => (
-                <li key={i}>{point}</li>
-              ))}
-            </ul>
-          </GlassCard>
-        ))}
-      </div>
+        <LayoutGroup>
+          <div className="mt-10 space-y-6">
+            {items.map((item) => {
+              const isMatch = matches(item.texts, filters)
+              return (
+                <MotionCard
+                  key={item.id}
+                  id={item.id}
+                  dimmed={active && !isMatch}
+                  collapsed={active && !isMatch}
+                >
+                  {item.render()}
+                </MotionCard>
+              )
+            })}
+          </div>
+        </LayoutGroup>
       </div>
     </section>
   )

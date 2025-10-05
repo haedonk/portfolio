@@ -1,6 +1,13 @@
+'use client'
+import { LayoutGroup } from 'framer-motion'
+import MotionCard from './MotionCard'
+import useActiveFilters from './useActiveFilters'
+import { matches } from './match'
 import { GlassCard } from './GlassCard'
+import type { CardItem } from './ResultsShelf'
 
 interface Project {
+  id: string
   title: string
   summary: string
   stack: string[]
@@ -8,8 +15,9 @@ interface Project {
   links: { label: string; href: string }[]
 }
 
-const projects = [
+const projects: Project[] = [
   {
+    id: 'bulk-messaging-system',
     title: 'Bulk Messaging System',
     summary:
       'High-throughput batch and Kafka-based messaging system replacing legacy ETL workflows for large-scale customer notifications at PNC Bank.',
@@ -26,9 +34,9 @@ const projects = [
     links: [],
   },
   {
+    id: 'sms-banking-integrations',
     title: 'SMS Banking Integrations',
-    summary:
-      'Modernized messaging services powering multi-channel customer notifications at PNC Bank.',
+    summary: 'Modernized messaging services powering multi-channel customer notifications at PNC Bank.',
     stack: ['Java 21', 'Spring Boot', 'Kafka', 'OpenShift'],
     achievements: [
       'Handled 5k+ transactions per second with resilient Kafka consumer groups and short-circuiting patterns.',
@@ -41,6 +49,7 @@ const projects = [
     links: [],
   },
   {
+    id: 'recipe-ai-platform',
     title: 'Recipe AI Platform',
     summary:
       'Semantic recipe discovery engine with ingestion pipeline for 200k+ records and personalized search results.',
@@ -62,8 +71,55 @@ const projects = [
   },
 ]
 
+export const projectCardItems: CardItem[] = projects.map((project) => ({
+  id: `project-${project.id}`,
+  title: project.title,
+  texts: [project.title, project.summary, project.stack, project.achievements],
+  render: () => (
+    <GlassCard className="flex h-full flex-col justify-between p-6">
+      <div className="space-y-4">
+        <div>
+          <h3 className="text-xl font-semibold text-[var(--text)]">{project.title}</h3>
+          <p className="mt-2 text-sm leading-6 text-[var(--muted)]">{project.summary}</p>
+        </div>
+        <div className="flex flex-wrap gap-2 text-xs font-medium uppercase tracking-wide text-[var(--muted)]">
+          {project.stack.map((item) => (
+            <span key={item} className="rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-1">
+              {item}
+            </span>
+          ))}
+        </div>
+        <ul className="list-disc space-y-2 pl-5 text-sm leading-6 text-[var(--muted)]">
+          {project.achievements.map((achievement) => (
+            <li key={achievement}>{achievement}</li>
+          ))}
+        </ul>
+      </div>
+      {project.links.length > 0 && (
+        <div className="mt-6 flex flex-wrap gap-3">
+          {project.links.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center rounded-2xl border border-[var(--border)] px-3 py-2 text-xs font-semibold uppercase tracking-wide text-[var(--text)] transition duration-200 ease-out hover:-translate-y-0.5 hover:bg-[var(--surface)] hover:shadow-lg hover:shadow-black/40 focus-visible:-translate-y-0.5"
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
+      )}
+    </GlassCard>
+  ),
+}))
 
-export function Projects() {
+export function Projects({ items = projectCardItems }: { items?: CardItem[] }) {
+  const filters = useActiveFilters()
+  const active = filters.size > 0
+
+  if (active) return null
+
   return (
     <section id="projects" className="section-wrapper py-16 lg:py-20">
       <div className="flex flex-col gap-6">
@@ -73,43 +129,23 @@ export function Projects() {
             Selected work showcasing delivery of stable, data-informed platforms.
           </p>
         </div>
-        <div className="grid gap-6 lg:grid-cols-2">
-          {projects.map((project) => (
-            <GlassCard key={project.title} className="flex h-full flex-col justify-between p-6">
-              <div className="space-y-4">
-                <div>
-                  <h3 className="text-xl font-semibold text-[var(--text)]">{project.title}</h3>
-                  <p className="mt-2 text-sm leading-6 text-[var(--muted)]">{project.summary}</p>
-                </div>
-                <div className="flex flex-wrap gap-2 text-xs font-medium uppercase tracking-wide text-[var(--muted)]">
-                  {project.stack.map((item) => (
-                    <span key={item} className="rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-1">
-                      {item}
-                    </span>
-                  ))}
-                </div>
-                <ul className="list-disc space-y-2 pl-5 text-sm leading-6 text-[var(--muted)]">
-                  {project.achievements.map((achievement) => (
-                    <li key={achievement}>{achievement}</li>
-                  ))}
-                </ul>
-              </div>
-              <div className="mt-6 flex flex-wrap gap-3">
-                {project.links.map((link) => (
-                  <a
-                    key={link.href}
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center rounded-2xl border border-[var(--border)] px-3 py-2 text-xs font-semibold uppercase tracking-wide text-[var(--text)] transition duration-200 ease-out hover:-translate-y-0.5 hover:bg-[var(--surface)] hover:shadow-lg hover:shadow-black/40 focus-visible:-translate-y-0.5"
-                  >
-                    {link.label}
-                  </a>
-                ))}
-              </div>
-            </GlassCard>
-          ))}
-        </div>
+        <LayoutGroup>
+          <div className="grid gap-6 lg:grid-cols-2">
+            {items.map((it) => {
+              const isMatch = matches(it.texts, filters)
+              return (
+                <MotionCard
+                  key={it.id}
+                  id={it.id}
+                  dimmed={active && !isMatch}
+                  collapsed={active && !isMatch}
+                >
+                  {it.render()}
+                </MotionCard>
+              )
+            })}
+          </div>
+        </LayoutGroup>
       </div>
     </section>
   )

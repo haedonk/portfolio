@@ -1,12 +1,28 @@
+'use client'
+import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { GlassCard } from './GlassCard'
+import useActiveFilters from './useActiveFilters'
 
 export function Hero() {
+  const filters = useActiveFilters()
+  const active = filters.size > 0
+
   return (
-    <section id="top" className="section-wrapper pt-24 pb-20">
+    <AnimatePresence initial={false}>
+      {!active && (
+        <motion.section
+          key="hero"
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: 'auto' }}
+          exit={{ opacity: 0, height: 0 }}
+          transition={{ duration: 0.3, ease: 'easeInOut' }}
+          className="section-wrapper pt-24 pb-20"
+          style={{ overflow: 'hidden' }}
+        >
       <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr),minmax(0,1.1fr)] lg:items-center">
         <div className="flex min-h-full items-center justify-center lg:items-center">
-          <GlassCard className="flex h-56 w-56 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface)] text-3xl font-semibold text-[var(--text)] shadow-glass overflow-hidden">
+          <GlassCard className="flex h-56 w-56 items-center justify-center overflow-hidden rounded-full border border-[var(--border)] bg-[var(--surface)] text-3xl font-semibold text-[var(--text)] shadow-glass">
             <img
               src="/images/projects/IMG_4601.jpg"
               alt="Haedon Kaufman"
@@ -40,6 +56,8 @@ export function Hero() {
           </div>
         </div>
       </div>
-    </section>
+        </motion.section>
+      )}
+    </AnimatePresence>
   )
 }
