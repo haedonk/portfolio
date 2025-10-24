@@ -1,11 +1,36 @@
-import ParticleBackground from '../components/ParticleBackground'
-import Hero from '../components/Hero'
+'use client'
+import { useMemo } from 'react'
+import { About } from '../components/About'
+import { Contact } from '../components/Contact'
+import { Experience, experienceCardItems } from '../components/Experience'
+import FilterBar from '../components/FilterBar'
+import { Footer } from '../components/Footer'
+import { Header } from '../components/Header'
+import { Hero } from '../components/Hero'
+import { Projects, projectCardItems } from '../components/Projects'
+import ResultsShelf from '../components/ResultsShelf'
+import { Skills, highlightCardItems } from '../components/Skills'
 
 export default function Home() {
+  const items = useMemo(
+    () => [...projectCardItems, ...highlightCardItems, ...experienceCardItems],
+    []
+  )
+
   return (
-    <main className="relative min-h-screen bg-black text-white overflow-hidden">
-      <ParticleBackground />
-      <Hero />
-    </main>
+    <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
+      <Header />
+      <main>
+        <FilterBar />
+        <ResultsShelf items={items} />
+        <Hero />
+        <About />
+        <Skills />
+        <Projects />
+        <Experience />
+        <Contact />
+      </main>
+      <Footer />
+    </div>
   )
 }

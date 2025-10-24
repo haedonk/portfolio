@@ -1,0 +1,145 @@
+'use client'
+import { LayoutGroup } from 'framer-motion'
+import MotionCard from './MotionCard'
+import useActiveFilters from './useActiveFilters'
+import { matches } from './match'
+import { GlassCard } from './GlassCard'
+import type { CardItem } from './ResultsShelf'
+
+const skills = [
+  {
+    title: 'Backend',
+    items: ['Java', 'Spring Boot', 'Python', 'Node.js', 'REST APIs', 'Microservices', 'Pytorch'],
+  },
+  {
+    title: 'DevOps',
+    items: ['Kubernetes', 'OpenShift', 'Helm', 'Docker', 'Jenkins', 'CI/CD Automation', 'Google Cloud Platform'],
+  },
+  {
+    title: 'Data',
+    items: ['PostgreSQL', 'Oracle', 'Kafka', 'Power BI', 'Elasticsearch', 'Logscale', 'Dynatrace'],
+  },
+  {
+    title: 'Frontend',
+    items: ['TypeScript', 'React', 'Next.js', 'Design Systems', 'JavaScript'],
+  },
+  {
+    title: 'AI-Enhanced Development',
+    items: ['GitHub Copilot', 'OpenAI Codex', 'IntelliJ IDEA', 'PyCharm', 'VS Code'],
+  },
+]
+
+export const highlights = [
+  {
+    id: 'highlight-kubernetes',
+    title: 'Kubernetes — Scaling & Optimization',
+    description:
+      'Practical experience designing autoscaling and resource strategies to improve reliability and reduce cost. Focus areas include Horizontal Pod Autoscaler (HPA) for scaling pods by CPU/memory or custom metrics, Vertical Pod Autoscaler (VPA) for right-sizing pod resource requests, and using the Cluster Autoscaler for node-level scaling.',
+    bullets: [
+      'Horizontal vs. Vertical scaling: HPA (scale replicas) and VPA (adjust resource requests/limits).',
+      'Autoscaling pods on CPU/memory and custom metrics (Prometheus adapter / external metrics).',
+      'Resource requests & limits tuning to reduce throttling and optimize cluster utilization.',
+      'Cluster Autoscaler and node sizing to balance cost and performance.',
+      'Observability + readiness/liveness probes to ensure safe scaling and rollout behavior.',
+    ],
+  },
+  {
+    id: 'highlight-kafka',
+    title: 'Kafka — High-Throughput Messaging & Reliability',
+    description:
+      'Extensive experience architecting and tuning Apache Kafka for mission-critical systems requiring high throughput, message durability, and real-time processing. Skilled in optimizing producer–consumer performance, managing backpressure, and ensuring data integrity across distributed clusters.',
+    bullets: [
+      'Designed and optimized Kafka topologies supporting 5k+ TPS across multi-microservice environments.',
+      'Implemented partitioning strategies, consumer group balancing, and concurrency controls to maximize parallelism and minimize lag.',
+      'Enabled dynamic scaling of Kafka consumer applications based on consumer lag and CPU utilization, using sticky assignors to prevent stop-the-world rebalances.',
+      'Developed Kafka Connect integrations for ETL ingestion and data synchronization between databases and external APIs.',
+      'Created retry, backoff, and dead-letter workflows ensuring guaranteed delivery and fault isolation.',
+      'Applied fine-grained producer and consumer tuning (batch.size, linger.ms, fetch.min.bytes) to improve throughput and latency.',
+      'Instrumented topic health monitoring and lag tracking with Dynatrace and custom metrics dashboards.',
+    ],
+  },
+  {
+    id: 'highlight-spring-batch',
+    title: 'Spring Batch — Large-Scale Data Processing',
+    description:
+      'Proficient in designing scalable Spring Batch jobs for high-volume ETL and enrichment pipelines, enabling efficient, fault-tolerant data ingestion at enterprise scale.',
+    bullets: [
+      'Built parallelized file ingestion and transformation pipelines handling 4M+ records per run with chunk-oriented processing.',
+      'Implemented partitioned step execution and asynchronous task scheduling for optimal performance.',
+      'Integrated Spring Batch with Kafka Connectors for streaming and downstream data propagation.',
+      'Created custom retry, skip, and checkpoint logic to ensure transactional consistency and graceful recovery.',
+      'Optimized memory and commit intervals to balance throughput and stability during large-scale batch runs.',
+    ],
+  },
+]
+
+export const highlightCardItems: CardItem[] = highlights.map((item) => ({
+  id: item.id,
+  title: item.title,
+  texts: [item.title, item.description, item.bullets],
+  render: () => (
+    <GlassCard className="p-6">
+      <h3 className="text-lg font-semibold text-[var(--text)]">{item.title}</h3>
+      <p className="mt-2 text-sm text-[var(--muted)]">{item.description}</p>
+      <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-[var(--muted)]">
+        {item.bullets.map((point) => (
+          <li key={point}>{point}</li>
+        ))}
+      </ul>
+    </GlassCard>
+  ),
+}))
+
+export function Skills({ items = highlightCardItems }: { items?: CardItem[] }) {
+  const filters = useActiveFilters()
+  const active = filters.size > 0
+
+  if (active) return null
+
+  return (
+    <section id="skills" className="section-wrapper py-16 lg:py-20">
+      <div className="flex flex-col gap-6">
+        <div className="max-w-3xl">
+          <h2 className="section-heading">Skills</h2>
+          <p className="mt-3 leading-7 text-[var(--muted)]">
+            Tools and technologies I use to deliver reliable, observable, and secure software.
+          </p>
+        </div>
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+          {skills.map((group) => (
+            <GlassCard key={group.title} className="flex flex-col gap-4 p-6">
+              <h3 className="text-lg font-semibold text-[var(--text)]">{group.title}</h3>
+              <div className="flex flex-wrap gap-2">
+                {group.items.map((skill) => (
+                  <span
+                    key={skill}
+                    className="inline-flex items-center rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-1 text-xs font-medium uppercase tracking-wide text-[var(--muted)]"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </GlassCard>
+          ))}
+        </div>
+        <LayoutGroup>
+          <div className="mt-10 space-y-6">
+            {items.map((item) => {
+              const isMatch = matches(item.texts, filters)
+              return (
+                <MotionCard
+                  key={item.id}
+                  id={item.id}
+                  dimmed={active && !isMatch}
+                  collapsed={active && !isMatch}
+                >
+                  {item.render()}
+                </MotionCard>
+              )
+            })}
+          </div>
+        </LayoutGroup>
+      </div>
+    </section>
+  )
+}

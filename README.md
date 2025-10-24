@@ -1,74 +1,81 @@
 # Portfolio
 
-A modern, dark-themed portfolio built with Next.js 13+ App Router, featuring animated particles and smooth transitions.
+Clean, recruiter-friendly portfolio built with Next.js App Router, TypeScript, and Tailwind CSS. The interface embraces a glassmorphism aesthetic with subtle micro-interactions and responsive layouts across sections.
 
 ## Features
 
-- ✨ Dark theme with starry particle background
-- 🎬 Smooth animations using Framer Motion
-- 🎨 Styled with Tailwind CSS
-- ⚡ Built with Next.js 13+ App Router
-- 🎯 TypeScript support
-- 📱 Fully responsive design
-
-## Technologies Used
-
-- **Next.js 13+** - React framework with App Router
-- **TypeScript** - Type safety
-- **Tailwind CSS** - Utility-first CSS framework
-- **Framer Motion** - Animation library
-- **@tsparticles/react** - Particle background effects
-- **Orbitron Font** - Google Fonts
+- 🎯 Clear information architecture (Hero, About, Skills, Projects, Experience, Contact, Resume)
+- 🧊 Glass cards with accessible contrast and soft hover states
+- ⚡ Fast fonts via `next/font` (Inter + IBM Plex Mono)
+- ♿ Skip-link navigation, focus outlines, and reduced-motion safeguards
+- 🔍 Built-in SEO metadata and social sharing tags
 
 ## Getting Started
 
-1. **Install dependencies:**
+1. **Install dependencies**
    ```bash
    npm install
    ```
-
-2. **Run the development server:**
+2. **Run the development server**
    ```bash
    npm run dev
    ```
-
-3. **Open your browser:**
-   Navigate to [http://localhost:3000](http://localhost:3000)
+3. **Visit the site** at [http://localhost:3000](http://localhost:3000)
 
 ## Project Structure
 
 ```
 src/
 ├── app/
-│   ├── layout.tsx      # Global layout with font loading
-│   └── page.tsx        # Main homepage
+│   ├── layout.tsx      # Global layout, fonts, metadata
+│   ├── page.tsx        # Homepage assembling sections
+│   └── resume/         # Resume route using shared tokens
 ├── components/
-│   ├── ParticleBackground.tsx  # Animated particle background
-│   └── Hero.tsx               # Hero section with animations
+│   ├── About.tsx       # About section content
+│   ├── Contact.tsx     # Contact CTA and socials
+│   ├── Experience.tsx  # Timeline of roles
+│   ├── Footer.tsx      # Minimal footer
+│   ├── GlassCard.tsx   # Reusable glass surface wrapper
+│   ├── Header.tsx      # Sticky navigation bar
+│   ├── Hero.tsx        # Hero intro + CTAs
+│   ├── Projects.tsx    # Project showcase cards
+│   └── Skills.tsx      # Skill group chips
 └── styles/
-    └── globals.css     # Global styles and Tailwind imports
+    └── globals.css     # Design tokens, utilities, and resets
 ```
 
 ## Customization
 
-### Update Personal Information
-- Edit `src/components/Hero.tsx` to change your name and title
-- Modify `src/app/layout.tsx` to update the page metadata
+### Update personal details
+- `src/components/Hero.tsx`, `About.tsx`, `Experience.tsx`, and `Contact.tsx` contain profile copy, email, and links.
+- `src/app/layout.tsx` stores the global metadata, canonical URL, and social tags.
+- Place your PDF resume at `public/resume.pdf` or adjust the button link in `Header.tsx`.
 
-### Styling
-- Customize colors and animations in `tailwind.config.js`
-- Modify particle settings in `src/components/ParticleBackground.tsx`
-- Adjust animations in `src/components/Hero.tsx`
+### Add or edit projects
+Projects are defined in `src/components/Projects.tsx`. Each entry accepts:
+```ts
+{
+  title: string;
+  summary: string;
+  stack: string[];
+  achievements: string[];
+  links: { label: string; href: string }[];
+}
+```
+Add, remove, or edit objects in the `projects` array to keep the showcase current.
+
+### Theming tweaks
+- Adjust color tokens and shadows in `src/styles/globals.css`.
+- Extend Tailwind utilities (fonts, shadows, transitions) via `tailwind.config.js`.
 
 ## Build and Deploy
 
 ```bash
-# Build for production
 npm run build
-
-# Start production server
 npm start
 ```
+
+Deploy to any Next.js-friendly platform (Vercel, Netlify, Render) with the default build command `npm run build` and output `.next`.
 
 ## License
 
